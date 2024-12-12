@@ -1,6 +1,6 @@
 const express = require('express');
-const postController = require('../controllers/postController');
-const authMiddleware = require('../middleware/auth');
+const postController = require('piazza-saas/controllers/postController');
+const authMiddleware = require('piazza-saas/middleware/auth');
 const router = express.Router();
 
 // Protect routes with the auth middleware
