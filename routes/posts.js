@@ -1,10 +1,11 @@
 const express = require('express');
-const postController = require('piazza-saas/controllers/postController');
-const authMiddleware = require('piazza-saas/middleware/auth');
+const postController = require('../controllers/postController');
+const authMiddleware = require('../middleware/auth');
 const router = express.Router();
 
-// Protect routes with the auth middleware
-router.post('/', authMiddleware, postController.createPost); // Create a post
-router.get('/:topic', authMiddleware, postController.getPostsByTopic); // Browse posts by topic
+router.post('/', authMiddleware, postController.createPost);
+router.get('/:topic', authMiddleware, postController.getPostsByTopic);
+router.post('/:postId/report', authMiddleware, postController.reportPost);
+router.post('/:postId/views', authMiddleware, postController.incrementPostViews);
 
 module.exports = router;

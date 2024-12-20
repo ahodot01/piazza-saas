@@ -10,7 +10,16 @@ const postSchema = new mongoose.Schema({
   status: { type: String, default: 'Live' },
   likes: { type: Number, default: 0 },
   dislikes: { type: Number, default: 0 },
-  comments: [{ user: String, message: String }],
+  comments: [
+    {
+      user: String,
+      message: String,
+      timestamp: { type: Date, default: Date.now }, // TIMESTAMP
+    }
+  ],
+  views: { type: Number, default: 0 }, // VIEWS
+  tags: [String], // TAGS
+  reportedCount: { type: Number, default: 0 }, // REPORT/S AMOUNT
 });
 
 module.exports = mongoose.model('Post', postSchema);
