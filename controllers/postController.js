@@ -142,7 +142,7 @@ exports.dislikePost = async (req, res) => {
 // ADD COMMENT
 exports.addComment = async (req, res) => {
     const { postId } = req.params;
-    const { message } = req.body;
+    const { comment } = req.body;
 
     try {
         const post = await Post.findById(postId);
@@ -150,14 +150,14 @@ exports.addComment = async (req, res) => {
             return res.status(404).send('Post not found');
         }
 
-        if (!message) {
+        if (!comment) {
             return res.status(400).send('Comment message is required');
         }
 
         // Add the comment to the post
         post.comments.push({
             user: req.user.name, // Assuming `authMiddleware` adds the `user` object
-            message,
+            message: comment,
             timestamp: new Date(),
         });
 
