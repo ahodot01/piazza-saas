@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// EACH POST SPECIFICATIONS AND VARIABLES
 const postSchema = new mongoose.Schema({
   title: String,
   topic: { type: String, enum: ['Politics', 'Health', 'Sport', 'Tech'] },

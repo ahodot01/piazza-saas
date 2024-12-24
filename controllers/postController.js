@@ -1,4 +1,4 @@
-const Post = require('../models/Post');
+const Post = require('../models/Post'); // IMPORT POST MODEL
 const Report = require('../models/Report'); // IMPORT REPORT MODEL
 
 // CREATE POST
@@ -97,7 +97,7 @@ exports.incrementPostViews = async (req, res) => {
     }
 };
 
-// LIKE POST
+// LIKE POST (WITH ERRORS' CHECKING: NOT FOUND, OWN POST, ALREADY LIKED, EXPIRED)
 exports.likePost = async (req, res) => {
     const { postId } = req.params;
     const user = req.user.name;
@@ -122,7 +122,7 @@ exports.likePost = async (req, res) => {
 
         post.dislikes = post.dislikes.filter((dislikeUser) => dislikeUser !== user);
 
-        post.likes.push(user); // Add user to likes
+        post.likes.push(user);
         await post.save();
 
         res.status(200).send('Post liked successfully');
@@ -132,7 +132,7 @@ exports.likePost = async (req, res) => {
     }
 };
 
-// DISLIKE POST
+// DISLIKE POST (WITH ERRORS' CHECKING: NOT FOUND, , EXPIRED)
 exports.dislikePost = async (req, res) => {
     const { postId } = req.params;
 
@@ -146,7 +146,6 @@ exports.dislikePost = async (req, res) => {
             return res.status(400).send('Post is expired. No further interactions allowed.');
         }
 
-        // Increment the dislikes count
         post.dislikes += 1;
         await post.save();
 
@@ -176,9 +175,8 @@ exports.addComment = async (req, res) => {
             return res.status(400).send('Post is expired. No further interactions allowed.');
         }
 
-        // Add the comment to the post
         post.comments.push({
-            user: req.user.name, // Assuming `authMiddleware` adds the `user` object
+            user: req.user.name,
             message: comment,
             timestamp: new Date(),
         });
@@ -214,16 +212,16 @@ exports.getMostActivePost = async (req, res) => {
     const topic = req.params.topic;
 
     try {
-        // Find the most active post by topic based on the sum of likes and dislikes
+        // MOST ACTIVE POST BY TOPIC BASED ON THE SUM OF LIKES/DISLIKES
         const mostActivePost = await Post.find({ topic, status: 'Live' })
-            .sort({ likes: -1, dislikes: -1 }) // Sort first by likes, then dislikes in descending order
-            .limit(1); // Fetch the top post
+            .sort({ likes: -1, dislikes: -1 }) 
+            .limit(1); 
 
         if (mostActivePost.length === 0) {
             return res.status(404).send('No active posts found for this topic');
         }
 
-        res.status(200).send(mostActivePost[0]); // Return the most active post
+        res.status(200).send(mostActivePost[0]); 
     } catch (error) {
         console.error('Error fetching most active post:', error.message);
         res.status(500).send('Server error');

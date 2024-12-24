@@ -1,17 +1,17 @@
 const User = require('../models/User');
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken'); 
 const bcrypt = require('bcryptjs');
 
-// Register user
+// USER REGISTRATION
 exports.register = async (req, res) => {
     const { name, email, password } = req.body;
 
-    // Input validation
+    // INPUT VALIDATION
     if (!name || !email || !password) {
         return res.status(400).send('All fields are required.');
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Simple email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // EMAIL VALIDATION
     if (!emailRegex.test(email)) {
         return res.status(400).send('Invalid email format.');
     }
@@ -25,7 +25,7 @@ exports.register = async (req, res) => {
     res.status(201).send('User registered');
 };
 
-// Login user
+// LOGIN USER
 exports.login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -34,11 +34,11 @@ exports.login = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).send('Invalid credentials');
 
-    // Generate JWT
+    // TOKEN GENERATION
     const token = jwt.sign(
         { id: user._id, name: user.name },
         process.env.JWT_SECRET,
-        { expiresIn: '1h' } // Token expires in 1 hour
+        { expiresIn: '1h' } // TOKEN EXPIRES IN 1 HOUR
     );
 
     res.send({ token });

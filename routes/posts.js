@@ -3,14 +3,15 @@ const postController = require('../controllers/postController');
 const authMiddleware = require('../middleware/auth');
 const router = express.Router();
 
-router.post('/', authMiddleware, postController.createPost);
-router.get('/:topic', authMiddleware, postController.getPostsByTopic);
-router.post('/:postId/report', authMiddleware, postController.reportPost);
-router.post('/:postId/views', authMiddleware, postController.incrementPostViews);
-router.post('/:postId/like', authMiddleware, postController.likePost); // LIKE
-router.post('/:postId/dislike', authMiddleware, postController.dislikePost); // DISLIKE
-router.post('/:postId/comment', authMiddleware, postController.addComment);
-router.get('/:topic/expired', authMiddleware, postController.getExpiredPosts);
-router.get('/:topic/most-active', authMiddleware, postController.getMostActivePost);
+// VARIOUS ROUTES FOR ACTIVITES TO BE PERFORMED BY USERS
+router.post('/', authMiddleware, postController.createPost); // PERFORM POST
+router.get('/:topic', authMiddleware, postController.getPostsByTopic); // FETCH POSTS BY TOPIC
+router.post('/:postId/report', authMiddleware, postController.reportPost); // PERFORM REPORT
+router.post('/:postId/views', authMiddleware, postController.incrementPostViews); // POSTS' VIEW COUNT
+router.post('/:postId/like', authMiddleware, postController.likePost); // PERFORM LIKE
+router.post('/:postId/dislike', authMiddleware, postController.dislikePost); // PERFORM DISLIKE
+router.post('/:postId/comment', authMiddleware, postController.addComment); // PERFORM COMMENT
+router.get('/:topic/expired', authMiddleware, postController.getExpiredPosts); // GET EXPIRED POST/S
+router.get('/:topic/most-active', authMiddleware, postController.getMostActivePost); // MOST ACTIVE POST
 
 module.exports = router;
