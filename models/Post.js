@@ -8,18 +8,18 @@ const postSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now },
   expiration: Date,
   status: { type: String, default: 'Live' },
-  likes: { type: Number, default: 0 },
-  dislikes: { type: Number, default: 0 },
+  likes: [{ type: String }], // Number > Array of Strings
+  dislikes: [{ type: String }], // Number > Array of Strings
   comments: [
     {
       user: String,
       message: String,
-      timestamp: { type: Date, default: Date.now }, // TIMESTAMP
+      timestamp: { type: Date, default: Date.now },
     }
   ],
-  views: { type: Number, default: 0 }, // VIEWS
-  tags: [String], // TAGS
-  reportedCount: { type: Number, default: 0 }, // REPORT/S AMOUNT
+  views: { type: Number, default: 0 },
+  tags: [String],
+  reportedCount: { type: Number, default: 0 },
 });
 
 module.exports = mongoose.model('Post', postSchema);

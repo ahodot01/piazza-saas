@@ -96,3 +96,61 @@ exports.incrementPostViews = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
+// LIKE POST
+exports.likePost = async (req, res) => {
+    const { postId } = req.params;
+    const user = req.user.name; // Assuming `authMiddleware` adds the `user` object
+
+    try {
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).send('Post not found');
+        }
+
+        // Prevent liking the same post multiple times
+        if (post.likes.includes(user)) {
+            return res.status(400).send('You have already liked this post');
+        }
+
+        // Remove user from dislikes if they previously disliked it
+        post.dislikes = post.dislikes.filter((dislikeUser) => dislikeUser !== user);
+
+        post.likes.push(user); // Add user to likes
+        await post.save();
+
+        res.status(200).send('Post liked successfully');
+    } catch (error) {
+        console.error('Error liking post:', error.message);
+        res.status(500).send('Server error');
+    }
+};
+
+// DISLIKE POST
+exports.dislikePost = async (req, res) => {
+    const { postId } = req.params;
+    const user = req.user.name; // Assuming `authMiddleware` adds the `user` object
+
+    try {
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).send('Post not found');
+        }
+
+        // Prevent disliking the same post multiple times
+        if (post.dislikes.includes(user)) {
+            return res.status(400).send('You have already disliked this post');
+        }
+
+        // Remove user from likes if they previously liked it
+        post.likes = post.likes.filter((likeUser) => likeUser !== user);
+
+        post.dislikes.push(user); // Add user to dislikes
+        await post.save();
+
+        res.status(200).send('Post disliked successfully');
+    } catch (error) {
+        console.error('Error disliking post:', error.message);
+        res.status(500).send('Server error');
+    }
+};

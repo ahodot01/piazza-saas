@@ -7,5 +7,7 @@ router.post('/', authMiddleware, postController.createPost);
 router.get('/:topic', authMiddleware, postController.getPostsByTopic);
 router.post('/:postId/report', authMiddleware, postController.reportPost);
 router.post('/:postId/views', authMiddleware, postController.incrementPostViews);
+router.post('/:postId/like', authMiddleware, postController.likePost); // LIKE
+router.post('/:postId/dislike', authMiddleware, postController.dislikePost); // DISLIKE
 
 module.exports = router;
