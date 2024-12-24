@@ -11,5 +11,6 @@ router.post('/:postId/like', authMiddleware, postController.likePost); // LIKE
 router.post('/:postId/dislike', authMiddleware, postController.dislikePost); // DISLIKE
 router.post('/:postId/comment', authMiddleware, postController.addComment);
 router.get('/:topic/expired', authMiddleware, postController.getExpiredPosts);
+router.get('/:topic/most-active', authMiddleware, postController.getMostActivePost);
 
 module.exports = router;
