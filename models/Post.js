@@ -8,8 +8,8 @@ const postSchema = new mongoose.Schema({
   timestamp: { type: Date, default: Date.now },
   expiration: Date,
   status: { type: String, default: 'Live' },
-  likes: [{ type: String }], // Number > Array of Strings
-  dislikes: [{ type: String }], // Number > Array of Strings
+  likes: { type: Number, default: 0 }, 
+  dislikes: { type: Number, default: 0 }, 
   comments: [
     {
       user: String,
