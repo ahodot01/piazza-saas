@@ -100,6 +100,7 @@ exports.incrementPostViews = async (req, res) => {
 // LIKE POST
 exports.likePost = async (req, res) => {
     const { postId } = req.params;
+    const user = req.user.name;
 
     try {
         const post = await Post.findById(postId);
