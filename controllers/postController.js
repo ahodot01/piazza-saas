@@ -107,8 +107,17 @@ exports.likePost = async (req, res) => {
             return res.status(404).send('Post not found');
         }
 
-        // Increment the likes count
-        post.likes += 1;
+        if (post.owner === user) {
+            return res.status(400).send('Post owner cannot like their own post');
+        }
+
+        if (post.likes.includes(user)) {
+            return res.status(400).send('You have already liked this post');
+        }
+
+        post.dislikes = post.dislikes.filter((dislikeUser) => dislikeUser !== user);
+
+        post.likes.push(user); // Add user to likes
         await post.save();
 
         res.status(200).send('Post liked successfully');
