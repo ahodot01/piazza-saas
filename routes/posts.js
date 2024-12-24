@@ -9,5 +9,6 @@ router.post('/:postId/report', authMiddleware, postController.reportPost);
 router.post('/:postId/views', authMiddleware, postController.incrementPostViews);
 router.post('/:postId/like', authMiddleware, postController.likePost); // LIKE
 router.post('/:postId/dislike', authMiddleware, postController.dislikePost); // DISLIKE
+router.post('/:postId/comment', authMiddleware, postController.addComment);
 
 module.exports = router;

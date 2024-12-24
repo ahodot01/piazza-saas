@@ -138,3 +138,33 @@ exports.dislikePost = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
+// ADD COMMENT
+exports.addComment = async (req, res) => {
+    const { postId } = req.params;
+    const { message } = req.body;
+
+    try {
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).send('Post not found');
+        }
+
+        if (!message) {
+            return res.status(400).send('Comment message is required');
+        }
+
+        // Add the comment to the post
+        post.comments.push({
+            user: req.user.name, // Assuming `authMiddleware` adds the `user` object
+            message,
+            timestamp: new Date(),
+        });
+
+        await post.save();
+        res.status(200).send('Comment added successfully');
+    } catch (error) {
+        console.error('Error adding comment:', error.message);
+        res.status(500).send('Server error');
+    }
+};
