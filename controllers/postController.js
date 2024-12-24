@@ -168,3 +168,21 @@ exports.addComment = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
+// GET EXPIRED POSTS
+exports.getExpiredPosts = async (req, res) => {
+    const { topic } = req.params;
+
+    try {
+        const expiredPosts = await Post.find({ topic, status: 'Expired' });
+
+        if (expiredPosts.length === 0) {
+            return res.status(404).send('No expired posts found for this topic');
+        }
+
+        res.status(200).send(expiredPosts);
+    } catch (error) {
+        console.error('Error fetching expired posts:', error.message);
+        res.status(500).send('Server error');
+    }
+};
