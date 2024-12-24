@@ -108,6 +108,10 @@ exports.likePost = async (req, res) => {
             return res.status(404).send('Post not found');
         }
 
+        if (post.status === 'Expired' || new Date() > post.expiration) {
+            return res.status(400).send('Post is expired. No further interactions allowed.');
+        }
+
         if (post.owner === user) {
             return res.status(400).send('Post owner cannot like their own post');
         }
@@ -138,6 +142,10 @@ exports.dislikePost = async (req, res) => {
             return res.status(404).send('Post not found');
         }
 
+        if (post.status === 'Expired' || new Date() > post.expiration) {
+            return res.status(400).send('Post is expired. No further interactions allowed.');
+        }
+
         // Increment the dislikes count
         post.dislikes += 1;
         await post.save();
@@ -162,6 +170,10 @@ exports.addComment = async (req, res) => {
 
         if (!comment) {
             return res.status(400).send('Comment message is required');
+        }
+
+        if (post.status === 'Expired' || new Date() > post.expiration) {
+            return res.status(400).send('Post is expired. No further interactions allowed.');
         }
 
         // Add the comment to the post
