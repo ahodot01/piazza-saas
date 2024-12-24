@@ -215,15 +215,15 @@ exports.getMostActivePost = async (req, res) => {
 
     try {
         // Find the most active post by topic based on the sum of likes and dislikes
-        const mostActivePost = await Post.findOne({ topic, status: 'Live' })
-            .sort({ $add: ["likes", "dislikes"] }) // Sort by combined likes + dislikes in descending order
-            .exec();
+        const mostActivePost = await Post.find({ topic, status: 'Live' })
+            .sort({ likes: -1, dislikes: -1 }) // Sort first by likes, then dislikes in descending order
+            .limit(1); // Fetch the top post
 
-        if (!mostActivePost) {
+        if (mostActivePost.length === 0) {
             return res.status(404).send('No active posts found for this topic');
         }
 
-        res.status(200).send(mostActivePost);
+        res.status(200).send(mostActivePost[0]); // Return the most active post
     } catch (error) {
         console.error('Error fetching most active post:', error.message);
         res.status(500).send('Server error');
