@@ -208,3 +208,24 @@ exports.getExpiredPosts = async (req, res) => {
         res.status(500).send('Server error');
     }
 };
+
+// GET MOST ACTIVE POST
+exports.getMostActivePost = async (req, res) => {
+    const topic = req.params.topic;
+
+    try {
+        // Find the most active post by topic based on the sum of likes and dislikes
+        const mostActivePost = await Post.findOne({ topic, status: 'Live' })
+            .sort({ $add: ["likes", "dislikes"] }) // Sort by combined likes + dislikes in descending order
+            .exec();
+
+        if (!mostActivePost) {
+            return res.status(404).send('No active posts found for this topic');
+        }
+
+        res.status(200).send(mostActivePost);
+    } catch (error) {
+        console.error('Error fetching most active post:', error.message);
+        res.status(500).send('Server error');
+    }
+};
