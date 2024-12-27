@@ -8,7 +8,7 @@ app.use(express.json());
 
 // CONNECT TO MONGODB
 mongoose.connect(process.env.DB_CONNECTOR)
-  .then(() => console.log('MongoDB connected'))
+  .then(() => console.log('Connected to MongoDB successfully'))
   .catch(err => console.error('MongoDB connection error:', err));
 
 // ROUTES
