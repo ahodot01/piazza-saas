@@ -21,5 +21,5 @@ app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
 // FOR TESTING IN BROWSER
 app.get('/', (req, res) => {
-  res.send('WELCOME TO PIAZZA API! Made by Andrey Hodotovics (ahodot01@student.bbk.ac.uk) ')
+  res.send('WELCOME TO PIAZZA API! Made by Andrey Hodotovics (ahodot01@student.bbk.ac.uk)');
 });
