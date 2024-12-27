@@ -16,14 +16,14 @@ const verifyToken = (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded; // Attach user details to the request
+        req.user = decoded;
         next();
     } catch (err) {
         res.status(400).send('Invalid token.');
     }
 };
 
-// Configure Google OAuth Strategy
+// GOOGLE OAUTH
 passport.use(
     new GoogleStrategy(
         {
@@ -32,15 +32,13 @@ passport.use(
             callbackURL: `${process.env.NGROK_URL}/api/auth/google/callback`,
         },
         async (accessToken, refreshToken, profile, done) => {
-            // Handle Google profile data
             console.log('Google Profile:', profile);
-            // You can save the user profile to the database here, if needed
             return done(null, profile);
         }
     )
 );
 
-// Serialize and deserialize user (required for Passport)
+// FOR GOOGLE PASSPORT
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
 
@@ -48,17 +46,16 @@ passport.deserializeUser((obj, done) => done(null, obj));
 router.post('/register', authController.register); // REGISTER 
 router.post('/login', authController.login);       // LOGIN
 
-// Google OAuth Routes
+// GOOGLE OAUTH ROUTES
 router.get(
     '/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] }) // Google login route
+    passport.authenticate('google', { scope: ['profile', 'email'] }) // GOOGLE LOGIN
 );
 
 router.get(
     '/google/callback',
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
-        // Successful authentication
         res.send('Google OAuth Successful!');
     }
 );

@@ -7,7 +7,7 @@ const { router: authRoutes, verifyToken } = require('./routes/auth');
 const app = express();
 app.use(express.json());
 
-// Initialize Passport
+// PASSPORT
 app.use(passport.initialize());
 
 // CONNECT TO MONGODB
@@ -16,8 +16,7 @@ mongoose.connect(process.env.DB_CONNECTOR)
   .catch(err => console.error('MongoDB connection error:', err));
 
 // ROUTES
-// app.use('/api/auth', require('./routes/auth').router);
-app.use('/api/auth', authRoutes); // Auth routes (JWT and Google OAuth)
+app.use('/api/auth', authRoutes); // AUTH ROUTES (JWT & GOOGLE OAUTH)
 app.use('/api/posts', require('./routes/posts'));
 
 // START THE SERVER

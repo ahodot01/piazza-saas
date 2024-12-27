@@ -16,4 +16,5 @@ router.get('/:topic/most-active', verifyToken, postController.getMostActivePost)
 
 module.exports = router;
 
-// console.log(module.exports);
+//  FOR DEBUG
+//  console.log(module.exports);
