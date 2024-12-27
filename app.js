@@ -12,7 +12,7 @@ mongoose.connect(process.env.DB_CONNECTOR)
   .catch(err => console.error('MongoDB connection error:', err));
 
 // ROUTES
-app.use('/api/auth', require('./routes/auth'));
+app.use('/api/auth', require('./routes/auth').router);
 app.use('/api/posts', require('./routes/posts'));
 
 // START THE SERVER

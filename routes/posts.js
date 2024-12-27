@@ -1,6 +1,6 @@
+const { verifyToken } = require('./auth');
 const express = require('express');
 const postController = require('../controllers/postController');
-const { verifyToken } = require('./auth');
 const router = express.Router();
 
 // VARIOUS ROUTES FOR ACTIVITES TO BE PERFORMED BY USERS
@@ -15,3 +15,5 @@ router.get('/:topic/expired', verifyToken, postController.getExpiredPosts); // G
 router.get('/:topic/most-active', verifyToken, postController.getMostActivePost); // MOST ACTIVE POST
 
 module.exports = router;
+
+console.log(module.exports);
