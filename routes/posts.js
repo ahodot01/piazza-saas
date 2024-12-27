@@ -1,6 +1,6 @@
 const express = require('express');
 const postController = require('../controllers/postController');
-const authMiddleware = require('../middleware/auth');
+const { verifyToken } = require('./routes/auth');
 const router = express.Router();
 
 // VARIOUS ROUTES FOR ACTIVITES TO BE PERFORMED BY USERS

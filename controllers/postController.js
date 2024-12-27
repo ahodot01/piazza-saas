@@ -132,7 +132,7 @@ exports.likePost = async (req, res) => {
     }
 };
 
-// DISLIKE POST (WITH ERRORS' CHECKING: NOT FOUND, , EXPIRED)
+// DISLIKE POST (WITH ERRORS' CHECKING)
 exports.dislikePost = async (req, res) => {
     const { postId } = req.params;
 
@@ -156,7 +156,7 @@ exports.dislikePost = async (req, res) => {
     }
 };
 
-// ADD COMMENT
+// ADD COMMENT (WITH ERRORS' CHECKING)
 exports.addComment = async (req, res) => {
     const { postId } = req.params;
     const { comment } = req.body;
