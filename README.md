@@ -1,4 +1,4 @@
-Piazza-SaaS is a cloud-based web application built using Node.js, Express.js, MongoDB, and
+Piazza-SaaS is a Twitter-like cloud-based web application built using Node.js, Express.js, MongoDB, and
 Docker and support of OAuth 2.0. The program is deployed on a Google Cloud Virtual
 Machine (VM). While the backend and basic functionality are fully completed, the frontend
 currently remains missing because it was not an essential component of this coursework.
