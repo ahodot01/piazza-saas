@@ -11,7 +11,7 @@ Key functionalities:
 
 • User/s authentication (JWT-based and Google OAuth 2.0)
 
-• Posting, liking, commenting, and reporting messages.
+• Posting, liking, disliking, commenting, and reporting messages.
 
 • Sorting posts by topic and fetching most active or expired posts.
 
